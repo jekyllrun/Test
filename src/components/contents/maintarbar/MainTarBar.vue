@@ -22,7 +22,7 @@
         <img src="~assets/images/tabbar/category_active.svg" alt="">
       </template>
       <template v-slot:item-text>
-        <div>品类</div>
+        <div>分类</div>
       </template>
     </tar-bar-item>
 

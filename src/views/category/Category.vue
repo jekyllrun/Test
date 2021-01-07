@@ -1,5 +1,7 @@
 <template>
-  <h2>品类</h2>
+  <ul>
+    
+  </ul>
 </template>
 
 <script>
