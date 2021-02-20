@@ -1,6 +1,14 @@
+
+
 <template>
   <div id="nav">
-    <router-view></router-view>
+    <router-view  v-slot="{ Component }">
+      <transition name="fade">
+      <keep-alive exclude="Detail">
+        <component :is="Component"/>
+      </keep-alive>
+      </transition>
+    </router-view>
     <main-tar-bar>
     </main-tar-bar>
   </div>
@@ -24,4 +32,7 @@
   .nav {
     position: relative;
   }
+
+
+
 </style>

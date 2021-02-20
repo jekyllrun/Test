@@ -13,7 +13,7 @@
     <HomeSwiper v-if="banners.length>0" :cbanners="banners"></HomeSwiper>
     <RecommendView :crecommends="recommends" />
     <FeatureView />
-    <TabControl class="tab-control" :titles="['流行','新款','精选']"  @tabClick="tableClick"/>
+    <TabControl class="tab-control" :titles="['流行','新款','精选']"  @tabClick="tableClick" ref='TabControl'/>
     <GoodsList :goods="showGoods"/>
 
     </Scroll>
@@ -74,7 +74,8 @@
           },
         },
         currentType:'pop',
-        isShowBackTop:false
+        isShowBackTop:false,
+        saveY:0
       }
     },
     computed:{
@@ -90,6 +91,30 @@
       this.getHomeGoods('pop')
       this.getHomeGoods('new')
       this.getHomeGoods('sell')
+
+      /* this.$bus.$on('itemImageLoad',() => {
+       console.log('---');
+       this.$refs.scroller.refresh();
+     })  */
+
+    },
+    mounted(){
+      /* console.log('初始化完成'); */
+
+     /* console.log(this.$refs.TabControl.$el.offsetTop) */
+    },
+
+    unmounted(){
+      /* console.log('Home destoryed'); */
+    },
+    activated(){
+      /* console.log('activated') */
+      this.$refs.scroller.scrollTo(0    ,this.saveY,0)
+      this.$refs.scroller.refresh() 
+    },
+    deactivated(){
+      /* console.log('deactivated') */
+      this.saveY = this.$refs.scroller.getScrollY()
     },
     methods: {
       getHomeMultidata() {
@@ -111,10 +136,7 @@
           this.goods[type].list.push(...res.data.list)
           this.goods[type].page += 1
           /* console.log(this.goods); */
-        
           this.$refs.scroller.finishPullUp()
-
-
         })
       },
 
@@ -143,12 +165,9 @@
 
 
       loadMore(){
-        console.log('加载更多！');
+       /*  console.log('加载更多！'); */
         this.getHomeGoods(this.currentType)
-
-
         this.$refs.scroller.refresh()  //手工刷新scroll中可滚动的区域。
-
       }
 
     }

@@ -1,6 +1,6 @@
 <template>
-  <div class="goods-item">
-      <img :src="goodsItem.show.img" alt="">
+  <div class="goods-item" @click="itemClick">
+      <img :src="goodsItem.show.img" alt="" @load="imageLoad">
       <div class="goods-info">
           <p>
               {{goodsItem.title}}
@@ -21,6 +21,41 @@ export default {
                 return {}
             }
         }
+    },
+    mounted(){
+        
+        
+    },
+    methods:{
+      
+      imageLoad(){
+        /* this.$bus.$emit('itemImageLoad')   //利用事件总线发射事件 */
+
+       /*  console.log('222') */
+       /* const refresh=this.debounce(()=>{
+         console.log('111');
+       },300)
+       setTimeout(()=>{
+         refresh()
+       }) */
+
+      },
+      itemClick(){
+        console.log('跳转详情页')
+        this.$router.push('/Detail/' + this.goodsItem.iid)
+      },
+      debounce(func,delay) {
+       
+        let timer = null
+        console.log(timer);
+        return function(...args){
+          if (timer) clearTimeout(timer)
+          timer = setTimeout(()=>{
+            func.apply(this,args)
+          },delay)
+        }
+      }
+     
     }
 }
 </script>
